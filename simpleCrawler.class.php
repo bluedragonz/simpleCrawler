@@ -18,8 +18,8 @@ class simpleCrawler {
         $parts = parse_url($url);
         if (!isset($parts['scheme'])) throw new Exception("URL must contain (http://)");
         if (empty($parts['scheme'])) throw new Exception("URL must contain (http://)");
-        if (!isset($parts['host'])) throw new Exception("URL must contain domain name (example.com)");
-        if (empty($parts['host'])) throw new Exception("URL must contain domain name (example.com)");
+        if (!isset($parts['host'])) throw new Exception("URL must contain (example.com)");
+        if (empty($parts['host'])) throw new Exception("URL must contain (example.com)");
         $this->scheme = strtolower($parts['scheme']);
         $this->domain = strtolower($parts['host']);
         $root = $parts['path'];
@@ -79,7 +79,6 @@ class simpleCrawler {
                 if ($part == '.' || $part == '') continue;
                 
                 if ($part == '..') {
-                    // Go a level deeper 
                     $level--;
                     if ($level < 0) break;
                 } else {
@@ -90,7 +89,7 @@ class simpleCrawler {
 
             if ($level < 1) continue;
             
-            $parsed = $this->scheme.'://'.$this->domain; // .$this->path;
+            $parsed = $this->scheme.'://'.$this->domain;
             
             for ($i=0; $i<$level; $i++) $parsed .= '/'.$new[$i];
             if ($isDir) $parsed .= '/';
